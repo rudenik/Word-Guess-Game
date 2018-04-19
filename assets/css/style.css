@@ -21,6 +21,26 @@ header{
       typing 4s steps(60, end),
       blink-caret .5s step-end infinite;
   }
+.gameplay{
+    display: inline;
+    overflow: hidden;
+    animation-name: typing;
+    animation-timing-function: steps(60, end);
+    animation-duration: 4s;
+    animation-delay: 15s;
+}
+#col1, #col2{
+    float: left;
+    margin: 20px;
+    padding: 10px;
+    border: dashed;
+    border-color: greenyellow;
+    width: 40%;
+}
+#lettersleft{
+    text-align: justify;
+    word-wrap: break-word;
+}
   
 @keyframes typing{
     from {width: 0 }
