@@ -29,6 +29,11 @@ header{
     animation-duration: 4s;
     animation-delay: 15s;
 }
+#gameplaycontainer{
+    position: absolute;
+    margin: 20px;
+    padding: 20px;
+}
 #col1, #col2{
     float: left;
     margin: 20px;
@@ -36,6 +41,22 @@ header{
     border: dashed;
     border-color: greenyellow;
     width: 40%;
+}
+#gameinfo{
+    clear: both;
+    text-align: center;
+    position: relative;
+    margin:20px;
+    padding: 20px;
+    border: dashed;
+    border-color: greenyellow;
+    width: 90%;
+    overflow: hidden;
+    animation: 
+      typing 4s steps(60, end),
+      /* blink-caret .5s step-end infinite; */
+  }
+
 }
 #lettersleft{
     text-align: justify;

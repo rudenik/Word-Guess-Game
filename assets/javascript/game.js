@@ -10,11 +10,14 @@ var gameIsOn = false;
 console.log(numberOfGuesses);
 var clueArray = [];
 var wordToGuess = specialWorld[1];
+var wordArray = [];
 var letterGuessed;
 var guessedLetters = [];
 buildClue();
+buildWordArray();
 
 window.onload = function () {
+    printGameInfo("Press Y key to get started");
     document.addEventListener("keyup", function (e) {
         //console.log(e.key);
         letterGuessed = e.key;
@@ -30,6 +33,7 @@ window.onload = function () {
     })
 }
 function gameStart() {
+    printGameInfo("Guess This word");
     while (gameIsOn) {
         if (numberOfGuesses > 0) {
             console.log("game is on");
@@ -51,10 +55,19 @@ function gameStart() {
         }
     }
 }
+function printGameInfo(textToPrint){
+    document.getElementById('gameinfo').innerHTML = textToPrint
+}
 function buildClue() {
-    for (letters in specialWorld[1]) {
+    for (letters in wordToGuess) {
         clueArray.push(" __")
         console.log("Clue Array: " + clueArray.length)
+    }
+}
+function buildWordArray(){
+    for(letters in wordToGuess){
+        wordArray.push(wordToGuess.charAt(letters))
+        console.log("Added: " + wordToGuess.charAt(letters) + " To word array")
     }
 }
 function printClue() {
@@ -78,14 +91,24 @@ function letterPressed(letter) {
     if (wordToGuess.indexOf(letterGuessed) > -1) {//I think you need another if statement here to determine if the game has actually ended.
         console.log('that letter is in there');
         var indexofEle = availableLetters.indexOf(letterGuessed);
-        console.log("Index Is: " + indexofEle)
-        availableLetters[indexofEle] = "[x]"
-        var clueIndex = wordToGuess.indexOf(letterGuessed);
-        clueArray[clueIndex] = (letterGuessed.toUpperCase()); //You need a for loop in hear for each appearance of the letter
-        console.log("ClueIndex: " + clueIndex + "clueArray: " + clueArray + "LetterGuessed: " + letterGuessed);
+        console.log("Alpha Index Is: " + indexofEle);
+        availableLetters[indexofEle] = "[x]";
+        
+        var indices = getAllIndex(wordToGuess, letterGuessed);
+        console.log("indices: " + indices)
+    //var occurences = wordToGuess.match(letterGuessed).length
+    //console.log("Frequnecy: " + occurences)
+        for(i=0; i < indices.length; i++){
+            clueArray[indices[i]] = letterGuessed.toUpperCase();
+            console.log("inserted " + letterGuessed + " at index: " + indices[i]);
+        }
+        // var clueIndex = wordToGuess.indexOf(letterGuessed);
+        // clueArray[clueIndex] = (letterGuessed.toUpperCase()); //You need a for loop in hear for each appearance of the letter
+        // console.log("ClueIndex: " + clueIndex + "clueArray: " + clueArray + "LetterGuessed: " + letterGuessed);
         printClue();
         printLetters();
         printNumberOfGuesses();
+    
     } else {
         console.log(letter + ': not there');
         numberOfGuesses -= 1;
@@ -99,6 +122,18 @@ function letterPressed(letter) {
 }
 function printNumberOfGuesses() {
     document.getElementById('remainingGuesses').innerHTML = numberOfGuesses;
+}
+function getAllIndex(word, value){
+    var indexes = [];
+    for(var i = 0; i < word.length; i++){
+        if(word.charAt(i) == value){ 
+        indexes.push(i);
+        // console.log("value: " + i);
+        }
+        // console.log("indexes: " + indexes);
+        
+    }
+    return indexes;
 }
     // 
 
