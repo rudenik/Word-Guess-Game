@@ -40,8 +40,9 @@ header{
     padding: 10px;
     border: dashed;
     border-color: greenyellow;
-    width: 40%;
+    width: 454px;
 }
+
 #gameinfo{
     clear: both;
     text-align: center;
@@ -57,7 +58,7 @@ header{
       /* blink-caret .5s step-end infinite; */
   }
 
-}
+
 #lettersleft{
     text-align: justify;
     word-wrap: break-word;
