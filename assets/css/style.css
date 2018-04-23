@@ -41,6 +41,7 @@ header{
     border: dashed;
     border-color: rgb(50, 224, 59);
     width: 454px;
+    line-height: 1.5em;
 }
 
 #gameinfo{
