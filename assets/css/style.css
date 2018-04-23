@@ -39,7 +39,7 @@ header{
     margin: 20px;
     padding: 10px;
     border: dashed;
-    border-color: greenyellow;
+    border-color: rgb(50, 224, 59);
     width: 454px;
 }
 
@@ -50,8 +50,8 @@ header{
     margin:20px;
     padding: 20px;
     border: dashed;
-    border-color: greenyellow;
-    width: 90%;
+    border-color: rgb(50, 224, 59);
+    width: 92%;
     overflow: hidden;
     animation: 
       typing 4s steps(60, end),
@@ -63,6 +63,27 @@ header{
     text-align: justify;
     word-wrap: break-word;
 }
+#additionalinfo{
+    margin: 20px;
+    padding: 20px;
+    width: 50px;
+    position: relative;
+    color: #fff;
+}
+button{
+    float:right;
+    background-color: black;
+    border: solid;
+    border-color: rgb(50, 224, 59);
+    border-width: 3px;
+    color: #fff;
+    padding: 10px 20px 10px 20px;
+}
+button:active{
+    background-color: rgb(50, 224, 59);
+    color: black;
+}
+
   
 @keyframes typing{
     from {width: 0 }

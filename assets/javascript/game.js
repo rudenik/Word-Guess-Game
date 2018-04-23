@@ -1,6 +1,8 @@
-var moviesList = ["Back to the Future", "The Breakfast Club", "Ghostbusters",
+var moviesList = ["empty","Back to the Future", "The Breakfast Club", "Ghostbusters",
     "Ferris Buellers Day Off", "The Goonies", "Aliens", "The Empire Strikes Back",
-    "Die Hard"];
+    "Die Hard", "Top Gun", "Stand by Me", "Raiders of the Lost Ark", "Gremlins", "The Terminator", "Sixteen Candles", "Pretty in Pink",
+    "Fast Times at Ridgemont High", "Weird Science", "Heathers", "Blade Runner", "Dirty Dancing", "Beetlejuice", "The Princess Bride",
+    "The Shining"];
 var specialWorld = ["Gnarly", "Tubular", "Way Cool", "Awesome", "Groovy", "Mondo", "Outrageous", "Funky"];
 var availableLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
@@ -9,15 +11,16 @@ var numberOfGuesses = 3;
 var gameIsOn = false;
 console.log(numberOfGuesses);
 var clueArray = [];
-var wordToGuess = moviesList[6].toLocaleLowerCase();
+var wordToGuess = pickNewWord();//moviesList[(Math.floor(Math.random() * moviesList.length)+1)].toLowerCase();//pickNewWord()//moviesList[6].toLocaleLowerCase();
 var wordArray = [];
 var letterGuessed;
 var guessedLetters = [];
-//buildClue();
-//buildWordArray();
+var audio;
+
 
 window.onload = function () {
     printGameInfo("Press Y key to get started");
+    pickNewWord();
     printClue();
     document.addEventListener("keyup", function (e) {
         letterGuessed = e.key;
@@ -41,6 +44,10 @@ window.onload = function () {
             printGameInfo("The Key you pressed isn't valid");
         }
     })
+    // var button = document.getElementById("additionalinfo");
+    // button.addEventListener("click", function(){
+    //     console.log("button clicked");
+    // })
 }
 function gameStart() {
     printGameInfo("Guess This word");
@@ -113,6 +120,10 @@ function letterPressed(letter) {
         printGameInfo("Correct, that letter is in the word!");
         if (clueArray.indexOf(" __") < 0) {
             printGameInfo("You win!");
+            createButton();
+            audio = new Audio('assets/audio/BTTF8bit.mp3');
+            audio.play();
+            
         }
 
     } else {
@@ -126,6 +137,9 @@ function letterPressed(letter) {
             printGameInfo("Game Over!");
             printNumberOfGuesses();
             gameIsOn = false;
+            audio = new Audio('assets/audio/MadWorld.mp3');
+            audio.play();
+            createButton();
         } else {
             console.log("Index Is: " + indexofEle)
             availableLetters[indexofEle] = "[x]"
@@ -147,13 +161,42 @@ function getAllIndex(word, value) {
     }
     return indexes;
 }
-/* Add button for restart
--return number of guesses to original number
--choose new word
--set game to on. 
--hide restart button
+function createButton(){
+    var restartButton = document.createElement("BUTTON");
+    var textForButton = document.createTextNode("Restart Game");
+    //restartButton.setAttribute()
+    restartButton.appendChild(textForButton);
+    var divForButton = document.getElementById('additionalinfo');
+    divForButton.appendChild(restartButton);
+    restartButton.addEventListener("click", function(){
+        console.log("button clicked");
+        restartGame();
+        restartButton.remove();
+        audio.pause();
+    } )
+}
+function restartGame(){
+    numberOfGuesses=12;
+    clueArray = [];
+    pickNewWord();
+    buildClue();
+    printClue();
+    printNumberOfGuesses();
+    availableLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+    'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+    'u', 'v', 'w', 'x', 'y', 'z'];
+    printLetters();
+    printGameInfo("Type a letter and guess this movie title")
+    gameIsOn=true;
 
-fix word/movie choosing method
+}
+function pickNewWord(){
+    wordToGuess=moviesList[(Math.floor(Math.random() * moviesList.length)+1)].toLowerCase();
+    console.log("New Movie title picked: " + wordToGuess);
+}
+/* 
+
+
 incorperate contra code
 sounds for the site
 
