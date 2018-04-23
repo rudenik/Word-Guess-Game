@@ -129,6 +129,7 @@ function letterPressed(letter) {
             audio.play();
         }
     } else {
+        numberOfGuesses -= 1;
         var indexofEle = availableLetters.indexOf(letterGuessed);
         if (indexofEle < 0) {
             printGameInfo("You've already guessed that letter");
@@ -143,7 +144,7 @@ function letterPressed(letter) {
             //console.log("Index Is: " + indexofEle)
             availableLetters[indexofEle] = "[x]"
             guessedLetters.push(letterGuessed.toUpperCase());
-            numberOfGuesses -= 1;
+            
             printLetters();
             printLettersGuessed();
             printNumberOfGuesses()
@@ -183,10 +184,12 @@ function createButton() {
 function restartGame() {
     numberOfGuesses = 7;
     clueArray = [];
+    guessedLetters = [];
     pickNewWord();
     buildClue();
     printClue();
     printNumberOfGuesses();
+    printLettersGuessed();
     availableLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
         'u', 'v', 'w', 'x', 'y', 'z'];
