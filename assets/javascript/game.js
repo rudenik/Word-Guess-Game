@@ -51,6 +51,8 @@ function gameStart() {
     printGameInfo("Guess this movie title");
     //console.log("game is on");
     document.getElementById('gameplay').innerHTML = "Shall we play a game?";
+    audio = new Audio('assets/audio/shallwe.mp3');
+    audio.play();
     printNumberOfGuesses()
     printLetters();
     buildClue();
@@ -144,7 +146,6 @@ function letterPressed(letter) {
             //console.log("Index Is: " + indexofEle)
             availableLetters[indexofEle] = "[x]"
             guessedLetters.push(letterGuessed.toUpperCase());
-            
             printLetters();
             printLettersGuessed();
             printNumberOfGuesses()
