@@ -3,7 +3,6 @@ var moviesList = ["empty", "Back to the Future", "The Breakfast Club", "Ghostbus
     "Die Hard", "Top Gun", "Stand by Me", "Raiders of the Lost Ark", "Gremlins", "The Terminator", "Sixteen Candles", "Pretty in Pink",
     "Fast Times at Ridgemont High", "Weird Science", "Heathers", "Blade Runner", "Dirty Dancing", "Beetlejuice", "The Princess Bride",
     "The Shining"];
-var specialWorld = ["Gnarly", "Tubular", "Way Cool", "Awesome", "Groovy", "Mondo", "Outrageous", "Funky"];
 var availableLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
     'u', 'v', 'w', 'x', 'y', 'z'];
@@ -14,7 +13,7 @@ var wordToGuess = pickNewWord();
 var letterGuessed;
 var guessedLetters = [];
 var audio;
-var winCount=0;
+var winCount = 0;
 
 
 
@@ -50,52 +49,26 @@ function gameStart() {
     buildClue();
     printClue();
 }
-
-function printGameInfo(textToPrint) {
-    document.getElementById('gameinfo').innerHTML = textToPrint
-}
-function buildClue() {
-    for (letters in wordToGuess) {
-        if (wordToGuess.charAt(letters) == " ") {
-            clueArray.push("<br>");
-        } else {
-            clueArray.push(" __");
-        }
-    }
-}
-
-function printClue() {
-    document.getElementById('wordToGuess').innerHTML = "";
-    for (letters in clueArray) {
-        document.getElementById('wordToGuess').innerHTML += clueArray[letters] + " ";
-    }
-}
-function printLetters() {
-    document.getElementById('lettersLeft').innerHTML = "";
-    for (letters in availableLetters) {
-        document.getElementById('lettersLeft').innerHTML += availableLetters[letters] + " ";
-    }
-}
-function printLettersGuessed(){
-    document.getElementById('lettersguessed').innerHTML = "";
-    for (letters in guessedLetters){
-        document.getElementById('lettersguessed').innerHTML += guessedLetters[letters] + " ";
-    }
-}
 function letterPressed(letter) {
     if (wordToGuess.indexOf(letterGuessed) > -1) {
         var indexofEle = availableLetters.indexOf(letterGuessed);
-        guessedLetters.push(letterGuessed.toUpperCase());
-        availableLetters[indexofEle] = "[x]";
-        var indices = getAllIndex(wordToGuess, letterGuessed);
-        for (i = 0; i < indices.length; i++) {
-            clueArray[indices[i]] = letterGuessed.toUpperCase();
+        var indexOfGuessedLetters = guessedLetters.indexOf(letterGuessed.toUpperCase());
+        if (indexOfGuessedLetters == -1) {
+            guessedLetters.push(letterGuessed.toUpperCase());
+            availableLetters[indexofEle] = "[x]";
+            var indices = getAllIndex(wordToGuess, letterGuessed);
+            for (i = 0; i < indices.length; i++) {
+                clueArray[indices[i]] = letterGuessed.toUpperCase();
+            }
+            printGameInfo("Correct, that letter is in the word!");
+        } else {
+            printGameInfo("You've already guessed that letter");
         }
         printClue();
         printLetters();
         printNumberOfGuesses();
         printLettersGuessed();
-        printGameInfo("Correct, that letter is in the word!");
+
         if (clueArray.indexOf(" __") < 0) {
             printGameInfo("You win!");
             createButton();
@@ -103,11 +76,12 @@ function letterPressed(letter) {
             printWins();
             audio = new Audio('assets/audio/BTTF8bit.mp3');
             audio.play();
-            gameIsOn=false;
+            gameIsOn = false;
         }
     } else {
         numberOfGuesses -= 1;
         var indexofEle = availableLetters.indexOf(letterGuessed);
+        var indexOfGuessedLetters = guessedLetters.indexOf(letterGuessed.toUpperCase());
         if (indexofEle < 0) {
             printGameInfo("You've already guessed that letter");
         } else if (numberOfGuesses < 1) {
@@ -126,12 +100,6 @@ function letterPressed(letter) {
             printGameInfo("Try again, That letter isn't in the title")
         }
     }
-}
-function printNumberOfGuesses() {
-    document.getElementById('remainingGuesses').innerHTML = numberOfGuesses;
-}
-function printWins(){
-    document.getElementById('wincount').innerHTML = winCount;
 }
 function getAllIndex(word, value) {
     var indexes = [];
@@ -173,3 +141,42 @@ function restartGame() {
 function pickNewWord() {
     wordToGuess = moviesList[(Math.floor(Math.random() * moviesList.length) + 1)].toLowerCase();
 }
+function buildClue() {
+    for (letters in wordToGuess) {
+        if (wordToGuess.charAt(letters) == " ") {
+            clueArray.push("<br>");
+        } else {
+            clueArray.push(" __");
+        }
+    }
+}
+
+function printClue() {
+    document.getElementById('wordToGuess').innerHTML = "";
+    for (letters in clueArray) {
+        document.getElementById('wordToGuess').innerHTML += clueArray[letters] + " ";
+    }
+}
+function printLetters() {
+    document.getElementById('lettersLeft').innerHTML = "";
+    for (letters in availableLetters) {
+        document.getElementById('lettersLeft').innerHTML += availableLetters[letters] + " ";
+    }
+}
+function printLettersGuessed() {
+    document.getElementById('lettersguessed').innerHTML = "";
+    for (letters in guessedLetters) {
+        document.getElementById('lettersguessed').innerHTML += guessedLetters[letters] + " ";
+    }
+}
+function printGameInfo(textToPrint) {
+    document.getElementById('gameinfo').innerHTML = textToPrint
+}
+
+function printNumberOfGuesses() {
+    document.getElementById('remainingGuesses').innerHTML = numberOfGuesses;
+}
+function printWins() {
+    document.getElementById('wincount').innerHTML = winCount;
+}
+
